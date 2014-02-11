@@ -34,7 +34,7 @@
       this.game.score = 0;
       this.game.physics.setBoundsToWorld(true, true, true, true);
       this.player = this.add.sprite(48, 100, 'player');
-      this.player.body.gravity.y = 1200;
+      this.player.body.gravity.y = 1500;
       this.player.anchor.setTo(0.5, 0.5);
       this.player.body.collideWorldBounds = true;
 
@@ -55,7 +55,7 @@
       var pipe, bottompipe;
       if(this.game.time.now > this.pipeTimer) {
         this.generatePipes();
-        this.pipeTimer = this.game.time.now + 1000;
+        this.pipeTimer = this.game.time.now + 1200;
       }
       pipe = this.pipes.getFirstAlive();
       if(pipe) {
@@ -74,7 +74,7 @@
 
     },
     flap: function() {
-      this.player.body.velocity.y = -450;
+      this.player.body.velocity.y = -500;
     },
     generatePipes: function() {
       var top, bottom, pipePosition;
@@ -84,15 +84,15 @@
         if (top < 64 ) {
           top = 64
         }
-        if (bottom > this.game.world.height - 112)
-          bottom = this.game.world.height - 112;
+        if (bottom > this.game.world.height - 128)
+          bottom = this.game.world.height - 128;
       } else {
         top = 64;
-        bottom = this.game.world.height - 112;
+        bottom = this.game.world.height - 128;
       }
       pipePosition = this.game.rnd.integerInRange(top, bottom);
       this.pipes.add(new Pipe(this.game, pipePosition, 'top'));
-      this.pipes.add(new Pipe(this.game, pipePosition + 112, 'bottom'));
+      this.pipes.add(new Pipe(this.game, pipePosition + 128, 'bottom'));
 
       this.lastPipePosition = pipePosition;
 
