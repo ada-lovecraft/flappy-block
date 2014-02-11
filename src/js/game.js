@@ -34,17 +34,17 @@
       this.game.score = 0;
       this.game.physics.setBoundsToWorld(true, true, true, true);
       this.player = this.add.sprite(48, 100, 'player');
-      this.player.body.gravity.y = 250;
+      this.player.body.gravity.y = 750;
       this.player.anchor.setTo(0.5, 0.5);
+      this.player.body.collideWorldBounds = true;
+
 
       this.pipes = this.game.add.group();
 
       
       
-      this.input.onDown.add(this.onInputDown, this);
+      this.input.onDown.add(this.flap, this);
 
-      this.spaceKey = this.game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-      this.spaceKey.onDown.add(this.flap, this);
       this.pipeTimer = 0;
       this.lastPipePopsition = null;
 
@@ -67,12 +67,14 @@
           this.scoreTxt.setText('Score: ' + this.game.score);
         }
       }
-
+      if(this.player.body.y >= this.game.height - this.player.body.height) {
+        this.deathHandler();
+      }
       this.game.physics.overlap(this.player, this.pipes, this.deathHandler, null, this);
 
     },
     flap: function() {
-      this.player.body.velocity.y = -200;
+      this.player.body.velocity.y = -300;
     },
     generatePipes: function() {
       var top, bottom, pipePosition;
