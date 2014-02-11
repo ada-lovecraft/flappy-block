@@ -55,7 +55,7 @@
       var pipe, bottompipe;
       if(this.game.time.now > this.pipeTimer) {
         this.generatePipes();
-        this.pipeTimer = this.game.time.now + 1500;
+        this.pipeTimer = this.game.time.now + 1000;
       }
       pipe = this.pipes.getFirstAlive();
       if(pipe) {
@@ -74,7 +74,7 @@
 
     },
     flap: function() {
-      this.player.body.velocity.y = -400;
+      this.player.body.velocity.y = -450;
     },
     generatePipes: function() {
       var top, bottom, pipePosition;
@@ -84,15 +84,15 @@
         if (top < 64 ) {
           top = 64
         }
-        if (bottom > this.game.world.height - 160)
-          bottom = this.game.world.height - 160;
+        if (bottom > this.game.world.height - 112)
+          bottom = this.game.world.height - 112;
       } else {
         top = 64;
-        bottom = this.game.world.height - 160;
+        bottom = this.game.world.height - 112;
       }
       pipePosition = this.game.rnd.integerInRange(top, bottom);
       this.pipes.add(new Pipe(this.game, pipePosition, 'top'));
-      this.pipes.add(new Pipe(this.game, pipePosition + 96, 'bottom'));
+      this.pipes.add(new Pipe(this.game, pipePosition + 112, 'bottom'));
 
       this.lastPipePosition = pipePosition;
 
