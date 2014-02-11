@@ -34,7 +34,7 @@
       this.game.score = 0;
       this.game.physics.setBoundsToWorld(true, true, true, true);
       this.player = this.add.sprite(48, 100, 'player');
-      this.player.body.gravity.y = 750;
+      this.player.body.gravity.y = 1200;
       this.player.anchor.setTo(0.5, 0.5);
       this.player.body.collideWorldBounds = true;
 
@@ -74,7 +74,7 @@
 
     },
     flap: function() {
-      this.player.body.velocity.y = -290;
+      this.player.body.velocity.y = -400;
     },
     generatePipes: function() {
       var top, bottom, pipePosition;
