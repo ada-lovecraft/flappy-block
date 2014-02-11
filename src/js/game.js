@@ -74,7 +74,7 @@
 
     },
     flap: function() {
-      this.player.body.velocity.y = -300;
+      this.player.body.velocity.y = -290;
     },
     generatePipes: function() {
       var top, bottom, pipePosition;
