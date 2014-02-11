@@ -1,0 +1,29 @@
+{
+  "name": "flappy-block",
+  "description": "",
+  "readme": "",
+  "repository": "",
+  "version": "0.0.0",
+  "readme": "",
+  "repository": "",
+  "dependencies": {},
+  
+  "devDependencies": {
+    "gulp": "*",
+    "gulp-util": "*",
+    "gulp-concat": "*",
+    "gulp-rename": "*",
+    "gulp-minify-css": "*",
+    "gulp-minify-html": "*",
+    "gulp-processhtml": "*",
+    "gulp-jshint": "*",
+    "gulp-uglify": "*",
+    "gulp-connect": "*",
+    "gulp-watch": "*",
+    "tiny-lr": "*"
+  },
+
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
