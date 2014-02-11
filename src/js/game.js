@@ -10,7 +10,7 @@
     else
       this.anchor.setTo(0,0);
     var scale = game.world.height/64;
-      this.scale.setTo(1,game.world.height/(64));
+      this.scale.setTo(0.8,game.world.height/(64));
     this.body.immovable = true;
     game.add.existing(this);
   }
@@ -74,7 +74,7 @@
 
     },
     flap: function() {
-      this.player.body.velocity.y = -500;
+      this.player.body.velocity.y = -480;
     },
     generatePipes: function() {
       var top, bottom, pipePosition;
@@ -84,15 +84,15 @@
         if (top < 64 ) {
           top = 64
         }
-        if (bottom > this.game.world.height - 128)
-          bottom = this.game.world.height - 128;
+        if (bottom > this.game.world.height - 112)
+          bottom = this.game.world.height - 112;
       } else {
         top = 64;
-        bottom = this.game.world.height - 128;
+        bottom = this.game.world.height - 112;
       }
       pipePosition = this.game.rnd.integerInRange(top, bottom);
       this.pipes.add(new Pipe(this.game, pipePosition, 'top'));
-      this.pipes.add(new Pipe(this.game, pipePosition + 128, 'bottom'));
+      this.pipes.add(new Pipe(this.game, pipePosition + 112, 'bottom'));
 
       this.lastPipePosition = pipePosition;
 
