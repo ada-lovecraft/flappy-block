@@ -15,7 +15,6 @@
 
       var highscores = new Firebase('https://flappyblock.firebaseIO.com/enhanced-scores');
       var scoreObj = {time: new Date().toJSON(), score: this.game.score};
-      console.debug('score:', scoreObj);
       highscores.push(scoreObj);
 
       this.titleTxt = this.add.bitmapText(x, y, 'Game Over', {font: '16px minecraftia', align: 'center'});
