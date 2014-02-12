@@ -84,11 +84,11 @@
         if (top < 64 ) {
           top = 64
         }
-        if (bottom > this.game.world.height - 112)
-          bottom = this.game.world.height - 112;
+        if (bottom > this.game.world.height - 224)
+          bottom = this.game.world.height - 224;
       } else {
         top = 64;
-        bottom = this.game.world.height - 112;
+        bottom = this.game.world.height - 224;
       }
       pipePosition = this.game.rnd.integerInRange(top, bottom);
       this.pipes.add(new Pipe(this.game, pipePosition, 'top'));
