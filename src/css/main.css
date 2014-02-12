@@ -15,3 +15,7 @@ html, body {
   height: 480px;
   margin: 20px auto;
 }
+
+.ad-container {
+  text-align: center;
+}
