@@ -13,10 +13,10 @@
       var x = this.game.width / 2
         , y = this.game.height / 2;
 
-      var highscores = new Firebase('https://flappyblock.firebaseIO.com/scores');
-      if(this.game.score > 0) {
-        highscores.push(this.game.score);
-      }
+      var highscores = new Firebase('https://flappyblock.firebaseIO.com/enhanced-scores');
+      var scoreObj = {time: new Date().toJSON(), score: this.game.score};
+      console.debug('score:', scoreObj);
+      highscores.push(scoreObj);
 
       this.titleTxt = this.add.bitmapText(x, y, 'Game Over', {font: '16px minecraftia', align: 'center'});
       this.titleTxt.anchor.setTo(0.5, 0.5);
