@@ -9,15 +9,20 @@
   GameOver.prototype = {
 
     create: function () {
+
       var x = this.game.width / 2
         , y = this.game.height / 2;
 
+      var highscores = new Firebase('https://flappyblock.firebaseIO.com/scores');
+      if(this.game.score > 0) {
+        highscores.push(this.game.score);
+      }
 
       this.titleTxt = this.add.bitmapText(x, y, 'Game Over', {font: '16px minecraftia', align: 'center'});
       this.titleTxt.anchor.setTo(0.5, 0.5);
       
       y = y + this.titleTxt.height + 5;
-      this.scoreTxt = this.add.bitmapText(x, y, 'Score: ' + this.game.score, {font: '16px minecraftia', align: 'center'});
+      this.scoreTxt = this.add.bitmapText(x, y, 'Your Score: ' + this.game.score, {font: '16px minecraftia', align: 'center'});
       this.scoreTxt.anchor.setTo(0.5, 0.5);
 
       y = y + this.scoreTxt.height + 5;
