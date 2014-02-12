@@ -49,7 +49,7 @@
       this.lastPipePopsition = null;
 
       this.scoreTxt = this.add.bitmapText(10, 10, 'Score: 0', {font: '16px minecraftia', align: 'left'});
-      this.recordTxt.x = this.game.width - this.recordTxt.width - 10;
+      
     },
 
     update: function () {
