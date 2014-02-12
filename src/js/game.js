@@ -10,7 +10,7 @@
     else
       this.anchor.setTo(0,0);
     var scale = game.world.height/64;
-      this.scale.setTo(0.8,game.world.height/(64));
+      this.scale.setTo(0.9,game.world.height/(64));
     this.body.immovable = true;
     game.add.existing(this);
   }
@@ -74,7 +74,7 @@
 
     },
     flap: function() {
-      this.player.body.velocity.y = -480;
+      this.player.body.velocity.y = -440;
     },
     generatePipes: function() {
       var top, bottom, pipePosition;
