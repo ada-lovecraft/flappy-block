@@ -67,9 +67,11 @@
           this.scoreTxt.setText('Score: ' + this.game.score);
         }
       }
+
       if(this.player.body.y >= this.game.height - this.player.body.height) {
         this.deathHandler();
       }
+      
       this.game.physics.overlap(this.player, this.pipes, this.deathHandler, null, this);
 
     },
