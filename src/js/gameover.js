@@ -4,6 +4,7 @@
   function GameOver() {
     this.titleTxt = null;
     this.startTxt = null;
+    this.showStats = true;
   }
 
   GameOver.prototype = {
@@ -16,6 +17,8 @@
       this.newPersonalHigh = false;
       this.newWorldRecord = false;
       this.newDailyRecord = false;
+      this.showStats = true;
+
       var self = this;
       
       refreshData().then(function() { self.setup() });
@@ -26,7 +29,6 @@
       increaseGamesPlayed();
 
       if(this.game.score > getPersonalHighScore()) {
-        console.debug('new personal best: ', this.game.score);
         setPersonalHighScore(this.game.score);
         this.newPersonalHigh = true;
       }
@@ -70,47 +72,48 @@
     setup: function() {
       var x = this.game.width / 2 - 30
         , y = 100 ;
+        if(this.showStats) {
+          this.loadingTxt.destroy();
 
-        this.loadingTxt.destroy();
+          if(this.game.score > getGlobalHighScore()) {
+            console.debug('new world record: ', this.game.score);
+            this.newWorldRecord = true;
+          }
 
-        if(this.game.score > getGlobalHighScore()) {
-          console.debug('new world record: ', this.game.score);
-          this.newWorldRecord = true;
-        }
+          if(this.game.score > getGlobalDailyHighScore()) {
+            console.debug('new daily record: ', this.game.score);
+            this.newDailyRecord = true;
+          }
 
-        if(this.game.score > getGlobalDailyHighScore()) {
-          console.debug('new daily record: ', this.game.score);
-          this.newDailyRecord = true;
-        }
+          y = this.highScoreTxt.y + this.highScoreTxt.height + 20;
+          this.worldTxt = this.add.bitmapText(x-130, y, 'The World:', {font: '18px minecraftia', align: 'left'});
 
-        y = this.highScoreTxt.y + this.highScoreTxt.height + 20;
-        this.worldTxt = this.add.bitmapText(x-130, y, 'The World:', {font: '18px minecraftia', align: 'left'});
+          y = y + this.worldTxt.height + 10;
+          this.globalDailyDeathsTxt = this.add.bitmapText(x, y, 'Daily Deaths: ' + getGlobalDailyGamesPlayed(), {font: '16px minecraftia', align: 'left'});
 
-        y = y + this.worldTxt.height + 10;
-        this.globalDailyDeathsTxt = this.add.bitmapText(x, y, 'Daily Deaths: ' + getGlobalDailyGamesPlayed(), {font: '16px minecraftia', align: 'left'});
+          y = y + this.globalDailyDeathsTxt.height + 5;
+          this.globalDailyRecordTxt = this.add.bitmapText(x, y, 'Daily Record: ' + getGlobalDailyHighScore(), {font: '16px minecraftia', align: 'left'});
+        
+          y = y + this.globalDailyRecordTxt.height + 5;
+          this.globalDeathsTxt = this.add.bitmapText(x, y, 'All Time Deaths: ' + getGlobalGamesPlayed(), {font: '16px minecraftia', align: 'left'});
 
-        y = y + this.globalDailyDeathsTxt.height + 5;
-        this.globalDailyRecordTxt = this.add.bitmapText(x, y, 'Daily Record: ' + getGlobalDailyHighScore(), {font: '16px minecraftia', align: 'left'});
-      
-        y = y + this.globalDailyRecordTxt.height + 5;
-        this.globalDeathsTxt = this.add.bitmapText(x, y, 'All Time Deaths: ' + getGlobalGamesPlayed(), {font: '16px minecraftia', align: 'left'});
+          y = y + this.globalDeathsTxt.height + 5;
+          this.globalRecordTxt = this.add.bitmapText(x, y, 'All Time Record: ' + getGlobalHighScore(), {font: '16px minecraftia', align: 'left'});
+        
+          if(this.newWorldRecord) {
+            console.debug('creating worldHighText');
+            this.worldHighText = this.add.bitmapText(this.game.width/2 - 200,100, 'NEW WORLD RECORD!', { fill: '#ffc600', font: '16px minecraftia', align: 'center'})
+            this.worldHighText.anchor.setTo(0.5, 0.5);
+            this.worldHighText.angle = -45;
+            this.worldHighText.scale.direct = 'grow';
+          }
 
-        y = y + this.globalDeathsTxt.height + 5;
-        this.globalRecordTxt = this.add.bitmapText(x, y, 'All Time Record: ' + getGlobalHighScore(), {font: '16px minecraftia', align: 'left'});
-      
-        if(this.newWorldRecord) {
-          console.debug('creating worldHighText');
-          this.worldHighText = this.add.bitmapText(this.game.width/2 - 200,100, 'NEW WORLD RECORD!', { fill: '#ffc600', font: '16px minecraftia', align: 'center'})
-          this.worldHighText.anchor.setTo(0.5, 0.5);
-          this.worldHighText.angle = -45;
-          this.worldHighText.scale.direct = 'grow';
-        }
-
-        if(this.newDailyRecord) {
-          this.worldDailyHighText = this.add.bitmapText(this.game.width/2 - 150, 125, 'NEW DAILY WORLD RECORD!', { fill: '#ffc600', font: '16px minecraftia', align: 'center'})
-          this.worldDailyHighText.anchor.setTo(0.5, 0.5);
-          this.worldDailyHighText.angle = -45;
-          this.worldDailyHighText.scale.direct = 'grow';
+          if(this.newDailyRecord) {
+            this.worldDailyHighText = this.add.bitmapText(this.game.width/2 - 150, 125, 'NEW DAILY WORLD RECORD!', { fill: '#ffc600', font: '16px minecraftia', align: 'center'})
+            this.worldDailyHighText.anchor.setTo(0.5, 0.5);
+            this.worldDailyHighText.angle = -45;
+            this.worldDailyHighText.scale.direct = 'grow';
+          }
         }
     },
 
@@ -144,6 +147,7 @@
     },
     onDown: function () {
       cancelRefresh();
+      this.showStats = false;
       this.game.state.start('game');
     }
   };
