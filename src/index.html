@@ -40,6 +40,7 @@
   <!-- build:js main.min.js -->
   <script src="js/lib/phaser.js"></script>
   <script src="js/lib/lodash.min.js"></script>
+  <script src="js/lib/moment.min.js"></script>
   <script src="js/lib/q.js"></script>
   <script src="js/boot.js"></script>
   <script src="js/preloader.js"></script>
@@ -65,13 +66,21 @@
   </script>
   <script type="text/javascript">
     var highScore = 0;
+    var dailyHigh = 0;
     var totalGames = 0;
+    var dailyTotalGames = 0;
     var highScoresRef = new Firebase('https://flappyblock.firebaseIO.com/enhanced-scores');
     function refreshData() {
       var deferred = Q.defer();
       highScoresRef.on('value', function(snapshot) {
         var snap = snapshot.val();
         var scores = _.map(snap, 'score');
+        var dailies = _.groupBy(snap, function(scoreObj) {
+          var date = new Date(scoreObj.time);
+          return moment(date).startOf('day');
+        });
+        dailyHigh = _.max(dailies[moment(new Date()).startOf('day')], 'score');
+        dailyTotalGames = dailies[moment(new Date()).startOf('day')].length;
         highScore = _.max(scores);
         totalGames = scores.length;
         deferred.resolve();
@@ -111,8 +120,17 @@
     function getGlobalHighScore() {
       return highScore;
     }
+
+    function getGlobalDailyHighScore() {
+      return highScore;
+    }
+
     function getGlobalGamesPlayed() {
       return totalGames;
+    }
+    
+    function getGlobalDailyGamesPlayed() {
+      return dailyTotalGames;
     }
   </script>
   

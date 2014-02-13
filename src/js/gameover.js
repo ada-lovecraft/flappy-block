@@ -15,6 +15,7 @@
 
       this.newPersonalHigh = false;
       this.newWorldRecord = false;
+      this.newDailyRecord = false;
       var self = this;
       
       refreshData().then(function() { self.setup() });
@@ -38,7 +39,7 @@
       this.scoreTxt.anchor.setTo(0.5, 0.5);
 
      
-      y = y + this.scoreTxt.height + 20;
+      y = y + this.scoreTxt.height + 10;
       this.localTxt = this.add.bitmapText(x-50, y, 'You:', {font: '18px minecraftia'});
     
 
@@ -77,56 +78,70 @@
           this.newWorldRecord = true;
         }
 
+        if(this.game.score > getGlobalDailyHighScore()) {
+          console.debug('new daily record: ', this.game.score);
+          this.newDailyRecord = true;
+        }
+
         y = this.highScoreTxt.y + this.highScoreTxt.height + 20;
         this.worldTxt = this.add.bitmapText(x-130, y, 'The World:', {font: '18px minecraftia', align: 'left'});
-      
+
         y = y + this.worldTxt.height + 10;
-        this.globalDeathsTxt = this.add.bitmapText(x, y, 'Deaths: ' + getGlobalGamesPlayed(), {font: '16px minecraftia', align: 'left'});
+        this.globalDailyDeathsTxt = this.add.bitmapText(x, y, 'Daily Deaths: ' + getGlobalDailyGamesPlayed(), {font: '16px minecraftia', align: 'left'});
+
+        y = y + this.globalDailyDeathsTxt.height + 5;
+        this.globalDailyRecordTxt = this.add.bitmapText(x, y, 'Daily Record: ' + getGlobalDailyHighScore(), {font: '16px minecraftia', align: 'left'});
+      
+        y = y + this.globalDailyRecordTxt.height + 5;
+        this.globalDeathsTxt = this.add.bitmapText(x, y, 'All Time Deaths: ' + getGlobalGamesPlayed(), {font: '16px minecraftia', align: 'left'});
 
         y = y + this.globalDeathsTxt.height + 5;
-        this.globalRecordTxt = this.add.bitmapText(x, y, 'Record: ' + getGlobalHighScore(), {font: '16px minecraftia', align: 'left'});
+        this.globalRecordTxt = this.add.bitmapText(x, y, 'All Time Record: ' + getGlobalHighScore(), {font: '16px minecraftia', align: 'left'});
       
         if(this.newWorldRecord) {
+          console.debug('creating worldHighText');
           this.worldHighText = this.add.bitmapText(this.game.width/2 - 200,100, 'NEW WORLD RECORD!', { fill: '#ffc600', font: '16px minecraftia', align: 'center'})
           this.worldHighText.anchor.setTo(0.5, 0.5);
           this.worldHighText.angle = -45;
           this.worldHighText.scale.direct = 'grow';
         }
+
+        if(this.newDailyRecord) {
+          this.worldDailyHighText = this.add.bitmapText(this.game.width/2 - 150, 125, 'NEW DAILY WORLD RECORD!', { fill: '#ffc600', font: '16px minecraftia', align: 'center'})
+          this.worldDailyHighText.anchor.setTo(0.5, 0.5);
+          this.worldDailyHighText.angle = -45;
+          this.worldDailyHighText.scale.direct = 'grow';
+        }
     },
 
     update: function () {
-      if(this.newPersonalHigh == true) {
-        if (this.personalHighText.scale.direction == 'grow') {
-          this.personalHighText.scale.x += 0.005;
-          this.personalHighText.scale.y += 0.005;
-          if(this.personalHighText.scale.x >= 1.2) {
-            this.personalHighText.scale.direction = 'shrink';
-          }
-        } else {
-          this.personalHighText.scale.x -= 0.005;
-          this.personalHighText.scale.y -= 0.005;
-          if(this.personalHighText.scale.x <= 1) {
-            this.personalHighText.scale.direction = 'grow';
-          }
-        }
+      if(this.newPersonalHigh) {
+        this.pulse(this.personalHighText);
       }
-      if(this.newWorldRecord == true) {
-        if (this.worldHighText.scale.direction == 'grow') {
-          this.worldHighText.scale.x += 0.005;
-          this.worldHighText.scale.y += 0.005;
-          if(this.worldHighText.scale.x >= 1.2) {
-            this.worldHighText.scale.direction = 'shrink';
-          }
-        } else {
-          this.worldHighText.scale.x -= 0.005;
-          this.worldHighText.scale.y -= 0.005;
-          if(this.worldHighText.scale.x <= 1) {
-            this.worldHighText.scale.direction = 'grow';
-          }
+      if(this.newWorldRecord && this.worldHighText) {
+
+        this.pulse(this.worldHighText);
+      }
+      if(this.newDailyRecord && this.worldDailyHighText) {
+        this.pulse(this.worldDailyHighText);
+      }
+
+    },
+    pulse: function(txt) {
+      if (txt.scale.direction == 'grow') {
+        txt.scale.x += 0.005;
+        txt.scale.y += 0.005;
+        if(txt.scale.x >= 1.2) {
+          txt.scale.direction = 'shrink';
+        }
+      } else {
+        txt.scale.x -= 0.005;
+        txt.scale.y -= 0.005;
+        if(txt.scale.x <= 1) {
+          txt.scale.direction = 'grow';
         }
       }
     },
-
     onDown: function () {
       cancelRefresh();
       this.game.state.start('game');
