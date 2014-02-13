@@ -69,14 +69,19 @@
     var highScoresRef = new Firebase('https://flappyblock.firebaseIO.com/enhanced-scores');
     function refreshData() {
       var deferred = Q.defer();
-      highScoresRef.once('value', function(snapshot) {
+      highScoresRef.on('value', function(snapshot) {
         var snap = snapshot.val();
         var scores = _.map(snap, 'score');
         highScore = _.max(scores);
         totalGames = scores.length;
         deferred.resolve();
+        highScoresRef.off('value');
       });
       return deferred.promise;
+    }
+
+    function cancelRefresh() {
+      highScoresRef.off('value');
     }
 
     if(!localStorage.getItem('gamesPlayed')) {

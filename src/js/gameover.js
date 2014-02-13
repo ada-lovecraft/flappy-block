@@ -62,6 +62,9 @@
         this.personalHighText.angle = 45;
         this.personalHighText.scale.direct = 'grow';
       }
+
+      this.input.onDown.add(this.onDown, this);
+
     },
     setup: function() {
       var x = this.game.width / 2 - 30
@@ -89,7 +92,6 @@
           this.worldHighText.angle = -45;
           this.worldHighText.scale.direct = 'grow';
         }
-        this.input.onDown.add(this.onDown, this);
     },
 
     update: function () {
@@ -126,6 +128,7 @@
     },
 
     onDown: function () {
+      cancelRefresh();
       this.game.state.start('game');
     }
   };
