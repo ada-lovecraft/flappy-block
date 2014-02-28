@@ -16,7 +16,10 @@
       this.load.setPreloadSprite(this.asset);
       this.load.image('player', 'assets/player.png');
       this.load.image('pipe', 'assets/pipe.png');
+      this.load.image('background', 'assets/Argyle-Pattern.jpg');
       this.load.bitmapFont('minecraftia', 'assets/minecraftia.png', 'assets/minecraftia.xml');
+
+      this.load.audio('jump', 'assets/jump.wav');
     },
 
     create: function () {
@@ -25,7 +28,7 @@
 
     update: function () {
       if (!!this.ready) {
-        this.game.state.start('menu');
+        this.game.state.start('game');
       }
     },
 

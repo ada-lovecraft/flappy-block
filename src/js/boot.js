@@ -21,7 +21,7 @@
         this.game.stage.scale.minHeight = 260;
         this.game.stage.scale.maxWidth = 640;
         this.game.stage.scale.maxHeight = 480;
-        this.game.stage.scale.forceLandscape = true;
+        this.game.stage.scale.forceLandscape = false;
         this.game.stage.scale.pageAlignHorizontally = true;
         this.game.stage.scale.setScreenSize(true);
       }

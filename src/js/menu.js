@@ -13,12 +13,11 @@
         , y = this.game.height / 2;
 
 
-      this.titleTxt = this.add.bitmapText(x, y, 'FLAPPY BLOCK', {font: '16px minecraftia', align: 'center'});
-      this.titleTxt.anchor.setTo(0.5, 0.5);
+      this.titleTxt = this.add.bitmapText(x, y, 'minecraftia','FLAPPY BLOCK',16);
 
       y = y + this.titleTxt.height + 5;
-      this.startTxt = this.add.bitmapText(x, y, 'Click To Start', {font: '12px minecraftia', align: 'center'});
-      this.startTxt.anchor.setTo(0.5, 0.5);
+      this.startTxt = this.add.bitmapText(x, y, 'minecraftia','Click To Start', 12);
+      
 
       this.input.onDown.add(this.onDown, this);
     },
